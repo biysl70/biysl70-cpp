@@ -16,8 +16,8 @@ set(TEST_CASES 1 2 3 4 5 6 7 8)
 foreach(TEST_NUM ${TEST_CASES})
     add_test(
         NAME run_test_${TEST_NUM}
-        COMMAND sh -c
-            "$<TARGET_FILE:cpp_exam> < ${CMAKE_CURRENT_SOURCE_DIR}/testcases/input_${TEST_NUM}.txt > ${CMAKE_CURRENT_BINARY_DIR}/output_${TEST_NUM}.txt 2>&1"
+        COMMAND ${CMAKE_COMMAND} -E sh -c
+            "$<TARGET_FILE:cpp_exam> < ${CMAKE_CURRENT_SOURCE_DIR}/testcases/input_${TEST_NUM}.txt > ${CMAKE_CURRENT_BINARY_DIR}/output_${TEST_NUM}.txt"
     )
 
     add_test(
