@@ -12,21 +12,19 @@ add_executable(cpp_exam
 enable_testing()
 
 set(TEST_CASES 1 2 3 4 5 6 7 8)
-
 foreach(TEST_NUM ${TEST_CASES})
-    add_test(
-        NAME run_test_${TEST_NUM}
-        COMMAND ${CMAKE_COMMAND} -E sh -c
-            "$<TARGET_FILE:cpp_exam> < ${CMAKE_CURRENT_SOURCE_DIR}/testcases/input_${TEST_NUM}.txt > ${CMAKE_CURRENT_BINARY_DIR}/output_${TEST_NUM}.txt"
-    )
-
     add_test(
         NAME test_${TEST_NUM}
         COMMAND ${CMAKE_COMMAND} -E compare_files
             ${CMAKE_CURRENT_SOURCE_DIR}/testcases/expected_${TEST_NUM}.txt
             ${CMAKE_CURRENT_BINARY_DIR}/output_${TEST_NUM}.txt
     )
-
+    
+    add_test(
+        NAME run_test_${TEST_NUM}
+        COMMAND sh -c "$<TARGET_FILE:cpp_exam> < ${CMAKE_CURRENT_SOURCE_DIR}/testcases/input_${TEST_NUM}.txt > ${CMAKE_CURRENT_BINARY_DIR}/output_${TEST_NUM}.txt 2>&1"
+    )
+    
     set_tests_properties(test_${TEST_NUM} PROPERTIES DEPENDS run_test_${TEST_NUM})
 endforeach()
 
